@@ -1,53 +1,26 @@
-import React from "react";
-import { Grid, List, GridColumn } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
+import React, { useContext } from "react";
+import { Grid } from "semantic-ui-react";
+
 import ActivityList from "./ActivityList";
 import ActivityDetail from "../details/ActivityDetail";
 import ActivityForm from "../form/ActivityForm";
-interface IProps {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
-  selectedActivity: IActivity | null;
-  editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
-  setSelectedActivity: (activity: IActivity | null) => void;
-  createActivity: (activity: IActivity) => void;
-  editActivity: (activity: IActivity) => void;
-  deleteActivity:(id:string) => void;
-}
+import { observer } from "mobx-react-lite";
+import ActivityStore from "../../../app/stores/ActivityStore";
 
-const ActivityDashboard: React.FC<IProps> = ({
-  activities,
-  selectActivity,
-  selectedActivity,
-  editMode,
-  setEditMode,
-  setSelectedActivity,
-  createActivity,
-  editActivity,
-  deleteActivity
-}) => {
+const ActivityDashboard: React.FC = () => {
+  const activityStore = useContext(ActivityStore);
+  const { editMode, selectedActivity } = activityStore;
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityList activities={activities} selectActivity={selectActivity} deleteActivity={deleteActivity} />
+        <ActivityList />
       </Grid.Column>
       <Grid.Column width={6}>
-        {selectedActivity && !editMode && (
-          <ActivityDetail
-            activity={selectedActivity}
-            setEditMode={setEditMode}
-            setSelectedActivity={setSelectedActivity}
-
-          />
-        )}
+        {selectedActivity && !editMode && <ActivityDetail />}
         {editMode && (
           <ActivityForm
             key={(selectedActivity && selectedActivity.id) || 0}
-            setEditMode={setEditMode}
             activity={selectedActivity!}
-            createActivity={createActivity}
-            editActivity={editActivity}
           />
         )}
       </Grid.Column>
@@ -55,4 +28,4 @@ const ActivityDashboard: React.FC<IProps> = ({
   );
 };
 
-export default ActivityDashboard;
+export default observer(ActivityDashboard);

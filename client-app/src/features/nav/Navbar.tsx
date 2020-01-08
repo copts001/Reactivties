@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
-interface Iprops {
-  openCreateForm: ()=>void;
-}
-const Navbar:React.FC<Iprops> = ({openCreateForm}) => {
+import ActivityStore from "../../app/stores/ActivityStore";
+import { observer } from "mobx-react-lite";
+
+const Navbar: React.FC = () => {
+  const activityStore = useContext(ActivityStore);
   return (
     <div>
       <Menu fixed="top" inverted>
         <Container>
           <Menu.Item header>
-            <img src="/assets/logo.png" alt="logo" style= {{marginRight:'10px'}}></img>
+            <img
+              src="/assets/logo.png"
+              alt="logo"
+              style={{ marginRight: "10px" }}
+            ></img>
           </Menu.Item>
           <Menu.Item name="Activities"></Menu.Item>
           <Menu.Item name="friends">
-            <Button  onClick={openCreateForm}positive content="Create Activities" />
+            <Button
+              onClick={activityStore.openCreateForm}
+              positive
+              content="Create Activities"
+            />
           </Menu.Item>
         </Container>
       </Menu>
@@ -21,4 +30,4 @@ const Navbar:React.FC<Iprops> = ({openCreateForm}) => {
   );
 };
 
-export default Navbar;
+export default observer(Navbar);
