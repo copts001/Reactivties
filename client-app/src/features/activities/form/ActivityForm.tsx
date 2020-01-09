@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useContext, useEffect } from "react";
-import { Segment, Form, Button } from "semantic-ui-react";
+import { Segment, Form, Button, Grid } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../app/stores/ActivityStore";
@@ -71,7 +71,9 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     setActivity({ ...activity, [name]: value });
   };
   return (
-    <Segment>
+    <Grid>
+      <Grid.Column width={10}>
+      <Segment>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           name="title"
@@ -127,6 +129,9 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         />
       </Form>
     </Segment>
+      </Grid.Column>
+    </Grid>
+
   );
 };
 
