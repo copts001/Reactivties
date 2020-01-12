@@ -18,10 +18,11 @@ import LoginForm from "../../features/user/LoginForm";
 import { RootStoreContext } from "../stores/rootStore";
 import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
-  const { setAppLoaded, token,appLoaded } = rootStore.commonStore;
+  const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
   const { getUser } = rootStore.userStore;
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
     }
   }, [getUser, setAppLoaded, token]);
 
-  if(!appLoaded) return <LoadingComponent content='Loading app...'/>
+  if (!appLoaded) return <LoadingComponent content="Loading app..." />;
 
   return (
     <Fragment>
@@ -53,6 +54,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={["/createActivity", "/manage/:id"]}
                   component={ActivityForm}
                 />
+                <Route path="/profile/:username" component={ProfilePage} />
                 <Route path="/login" component={LoginForm} />
                 <Route component={NotFound} />
               </Switch>
