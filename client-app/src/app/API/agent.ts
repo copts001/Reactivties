@@ -4,6 +4,7 @@ import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 
+
 axios.defaults.baseURL = "http://localhost:5000/api";
 axios.interceptors.request.use(
   config => {
@@ -72,7 +73,9 @@ const Activities = {
   create: (activity: IActivity) => requests.post("/activities", activity),
   update: (activity: IActivity) =>
     requests.put(`/activities/${activity.id}`, activity),
-  delete: (id: string) => requests.del(`/activities/${id}`)
+  delete: (id: string) => requests.del(`/activities/${id}`),
+  attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
+  unattend: (id: string) => requests.del(`/activities/${id}/attend`)
 };
 
 const User = {
